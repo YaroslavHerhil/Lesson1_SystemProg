@@ -21,6 +21,7 @@ namespace Lesson1_SystemProg
             InitializeComponent();
             allProcesses = Process.GetProcesses();
             process1.StartInfo = new System.Diagnostics.ProcessStartInfo("notepad");
+            process2.StartInfo = new System.Diagnostics.ProcessStartInfo("C:\\Users\\yarik\\source\\repos\\ExamIII_Wild_Hunt\\ExamIII_Wild_Hunt\\bin\\Debug\\net5.0-windows\\ExamIII_Wild_Hunt");
             ListOfProcessesReset();
             listView1.Columns.Add("Name", 260);
             listView1.Columns.Add("Id", 86);
@@ -44,8 +45,8 @@ namespace Lesson1_SystemProg
 
             try
             {
-
-                string processName = listView1.FocusedItem.ToString();
+                string processName = listView1.FocusedItem.Text;
+                
                 foreach (var process in Process.GetProcessesByName(processName))
                 {
                     process.Kill();
@@ -59,12 +60,21 @@ namespace Lesson1_SystemProg
             }
             ListOfProcessesReset();
         }
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+
+            process2.Start();
+
+            process2.WaitForExit();
+
+            ListOfProcessesReset();
+        }
 
         private void ListOfProcessesReset()
         {
             listView1.Items.Clear();
-            
-
+            allProcesses = null;
+            allProcesses = Process.GetProcesses();
 
 
             foreach (var process in allProcesses)
